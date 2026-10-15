@@ -108,7 +108,8 @@ def articulos(request):
                                 title= "Articulo", 
                                 ).exclude(
                                     public=True
-                                ) # Trae todos los articulos que contengan la palabra articulo en el titulo
+                                ) # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
+    articulos = Article.objects.raw("SELECT * FROM miapp_article WHERE title='Articulo' AND public=0") # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
 
     return render(request, 'articulos.html', {
         'articulos': articulos
