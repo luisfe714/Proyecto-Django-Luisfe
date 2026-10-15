@@ -100,7 +100,16 @@ def editar_articulo(request, id):
 def articulos(request):
 
     articulos = Article.objects.all() # Trae todos los articulos de la base de datos
-    
+
+    #Consultas con condiciones filter para filtrar por un valor especifico
+    articulos = Article.objects.filter(title__exact= "articulo") # Trae todos los articulos publicos de la base de datos
+
+    articulos = Article.objects.filter(
+                                title= "Articulo", 
+                                ).exclude(
+                                    public=True
+                                ) # Trae todos los articulos que contengan la palabra articulo en el titulo
+
     return render(request, 'articulos.html', {
         'articulos': articulos
 
