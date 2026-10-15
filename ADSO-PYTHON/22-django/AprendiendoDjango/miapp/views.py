@@ -95,4 +95,12 @@ def editar_articulo(request, id):
     articulo.public = True
     articulo.save()
 
-    return HttpResponse(f"Articulo actualizado: <strong>{articulo.title}</strong> - {articulo.content}")
+    return HttpResponse(f"Articulo {articulo.id} actualizado: <strong>{articulo.title}</strong> - {articulo.content}")
+
+def articulos(request):
+
+    articulos = Article.objects.all() # Trae todos los articulos de la base de datos
+    
+    return render(request, 'articulos.html', {
+        'articulos': articulos
+    })
