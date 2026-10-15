@@ -71,14 +71,37 @@ def contacto(request, nombre="", apellidos=""):
 
 def crear_articulo(request, title, content, public):
     articulo = Article(
-        title=title,
+        title=title, #title(nombre del modelo) = title(nombre de la variable)
         content=content,
         public=public
     )
+    #Para guardar este articulo en la BD
     articulo.save()
     return HttpResponse(f"Articulo Creado: <strong>{articulo.title}</strong> - {articulo.content}")
 
-def articulo(request):
+#Copia de crear_articulo y lo llamamos save_articulo
+def save_article(request):#No pasamos parametros por url y lo vamos a pasar por formulario
+    if request.method == 'POST':
+        title = request.POST['title']
+        if len(title) < 5:
+            return HttpResponse(f"El titulo es muy pequeño")
+        content = request.POST['content']
+        public = request.POST['public']
+        articulo = Article(
+            title = title,
+            content = content,
+            public = public
+        )
+        #Para guardar este articulo en la BD
+        articulo.save()
+        return HttpResponse(f"Articulo creado: <strong> {articulo.title} - {articulo.content} </strong>")
+    else:
+        return HttpResponse(f"<h2> No se ha podido crear el articulo </h2>")
+
+def create_article(request): #Soporte para plantilla para visualizar el formulario
+    return render(request, 'create-article.html')
+
+def articulo(request):  
 
     try:
         articulo = Article.objects.get(title= "Matrix", public=False) #objects=get(pk=1) #objects= es un metodo de django que permite traer un objeto de la base de datos, en este caso el articulo con id 1
