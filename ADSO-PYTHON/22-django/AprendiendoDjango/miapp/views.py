@@ -1,5 +1,6 @@
 from django.shortcuts import  render, HttpResponse, redirect
 from miapp.models import Article, Category
+from django.db.models import Q
 
 # Create your views here.
 # MVC Modelo Vista Controlador -> Acciones (Metodos)
@@ -110,6 +111,11 @@ def articulos(request):
                                     public=True
                                 ) # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
     articulos = Article.objects.raw("SELECT * FROM miapp_article WHERE title='Articulo' AND public=0") # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
+
+    #Consulta utilizando el OR con ORM
+    articulos = Article.objects.filter(
+       Q(title__contains="Primer Articulo") | Q(title__contains="Batman")
+    )
 
     return render(request, 'articulos.html', {
         'articulos': articulos
