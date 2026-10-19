@@ -81,10 +81,10 @@ def crear_articulo(request, title, content, public):
 
 #Copia de crear_articulo y lo llamamos save_articulo
 def save_article(request):#No pasamos parametros por url y lo vamos a pasar por formulario
-    if request.method == 'GET':
-        title = request.GET['title']
-        content = request.GET['content']
-        public = request.GET['public']
+    if request.method == 'POST':
+        title = request.POST['title']
+        content = request.POST['content']
+        public = request.POST['public']
         articulo = Article(
             title = title,
             content = content,
