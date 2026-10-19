@@ -1,6 +1,7 @@
 from django.shortcuts import  render, HttpResponse, redirect
 from miapp.models import Article, Category
 from django.db.models import Q
+from miapp.forms import FormArticle #Importamos el formulario desde forms.py
 
 # Create your views here.
 # MVC Modelo Vista Controlador -> Acciones (Metodos)
@@ -98,6 +99,14 @@ def save_article(request):#No pasamos parametros por url y lo vamos a pasar por 
 
 def create_article(request): #Soporte para plantilla para visualizar el formulario
     return render(request, 'create-article.html')
+
+def create_full_article(request):
+    #creamos una variable llamada formulario para instanciar el objeto
+    formulario = FormArticle()
+    #se carga la vista en html
+    return render(request, 'create_full_article.html', {
+        'form' : formulario
+    })
 
 def articulo(request):  
 
