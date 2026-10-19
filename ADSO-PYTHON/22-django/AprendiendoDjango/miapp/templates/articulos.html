@@ -1,30 +1,31 @@
 {% extends 'layout.html' %}
-
 {% block title %} Listado de Articulos {% endblock %}
-
 {% block content %}
-
 <h1 class="title">Listado de Articulos</h1>
-
-<ul>
-    {% for articulo in articulos %}
-        <li>
-            <h4>{{articulo.id}} - {{articulo.title}}</h4>
-            <span>{{articulo.created_at}}</span>
-            {%if articulo.public %}
-                <strong>Publicado</strong>
-            {%else%}
-                <strong>Privado</strong>
-            {%endif%}
-            <p>
-                {{articulo.content}}
-                <br/>
-                <a href="{% url 'borrar_articulo' id=articulo.id %}">Borrar Articulo</a>
-            </p>
-            
-            <br/>
-        </li>
+{% if messages %}
+    {% for message in messages%}
+        <div>
+            {{message}}
+        </div>
     {% endfor %}
-</ul>
-
+{% endif %}
+    <ul>
+        {% for articulo in articulos %}
+            <li>
+                <h4>{{articulo.id}} - {{articulo.title}}</h4>
+                <span>{{articulo.created_at}}</span>
+                {%if articulo.public %}
+                    <strong>Publicado</strong>
+                {%else%}
+                    <strong>Privado</strong>
+                {%endif%}
+                <p>
+                    {{articulo.content}}
+                    <br/>
+                    <a href="{% url 'borrar_articulo' id=articulo.id %}">Borrar Articulo</a>
+                </p>
+                <br/>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %} 

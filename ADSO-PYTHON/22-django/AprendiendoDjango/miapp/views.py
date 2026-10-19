@@ -81,12 +81,10 @@ def crear_articulo(request, title, content, public):
 
 #Copia de crear_articulo y lo llamamos save_articulo
 def save_article(request):#No pasamos parametros por url y lo vamos a pasar por formulario
-    if request.method == 'POST':
-        title = request.POST['title']
-        if len(title) < 5:
-            return HttpResponse(f"El titulo es muy pequeño")
-        content = request.POST['content']
-        public = request.POST['public']
+    if request.method == 'GET':
+        title = request.GET['title']
+        content = request.GET['content']
+        public = request.GET['public']
         articulo = Article(
             title = title,
             content = content,
@@ -121,8 +119,14 @@ def editar_articulo(request, id):
 
     return HttpResponse(f"Articulo {articulo.id} actualizado: <strong>{articulo.title}</strong> - {articulo.content}")
 
-def articulos(request):
-
+def articulos(request): #Creacion de la vista articulos
+    #Creamos una template para listar varios articulos
+    #1.Hacemos la peticion a la bd
+    #Creamos la variable articulos y llamamos al modelo Article, usamos objects para poder hacer una consulta
+    articulos = Article.objects.all().order_by('-id') #En este caso no usamos el metodo get si no el metodo all()
+    #para sacar toda la informacion
+    #dentro de articulos tenemos una lista de objetos un array de objetos
+    """
     articulos = Article.objects.all() # Trae todos los articulos de la base de datos
 
     #Consultas con condiciones filter para filtrar por un valor especifico
@@ -133,15 +137,23 @@ def articulos(request):
                                 ).exclude(
                                     public=True
                                 ) # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
+
+    #Consultas con condiciones filter para filtrar por un valor especifico
+    articulos = Article.objects.filter(title__contains = "Tiburon")
+
+    #Realizar una consulta que muestre solo los que esten publicados y excluya bajo una condicion
+    articulos = Article.onjects.filter (title = "Tiburon",).exclude(public = true)
+    
+    #Consulta ejecutando SQL
     articulos = Article.objects.raw("SELECT * FROM miapp_article WHERE title='Articulo' AND public=0") # Trae todos los articulos que contengan la palabra articulo en el titulo y que no sean publicos
 
     #Consulta utilizando el OR con ORM
     articulos = Article.objects.filter(
        Q(title__contains="Primer Articulo") | Q(title__contains="Batman")
     )
-
-    return render(request, 'articulos.html', {
-        'articulos': articulos
+    """
+    return render(request, 'articulos.html', { #pasamos el request y la template articulos.html y como tercer parametro
+        'articulos': articulos  #Pasamos un diccionario con las variables que deseamos mostrar
 
     })
 
