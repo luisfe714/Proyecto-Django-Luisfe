@@ -53,6 +53,11 @@
     <div id="content">
         <div class="box">
             <h2 class="title">Titulo de prueba</h2> 
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             {% block content %}
                 <!-- Codigo que viene de template -->
                 <strong>Contenido del bloque original!!!</strong>

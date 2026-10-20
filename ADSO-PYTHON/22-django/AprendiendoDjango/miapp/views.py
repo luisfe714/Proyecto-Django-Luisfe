@@ -1,4 +1,5 @@
 from django.shortcuts import  render, HttpResponse, redirect
+from django.contrib import messages
 from miapp.models import Article, Category
 from django.db.models import Q
 from miapp.forms import FormArticle #Importamos el formulario desde forms.py
@@ -120,6 +121,9 @@ def create_full_article(request):
                 )
             #Para guardar este articulo en la BD
             articulo.save()
+            #Crear mensaje flash(seseión que solo se muestra una vez)
+            messages.success(request, f'Ha creado correctamente el articulo {articulo.id}')
+            
             #redireccionar la pagina a articulos despues de guardado
             return redirect('articulos')
             #return HttpResponse(title + ' -- ' + content + ' -- ' + str(public))

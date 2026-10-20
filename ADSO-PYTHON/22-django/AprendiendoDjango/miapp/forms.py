@@ -6,7 +6,7 @@ class FormArticle(forms.Form): #Hereda de la clase forms
     #creamos las propiedades
     title = forms.CharField(
         label= "Titulo",
-        max_length=20,
+        max_length=150,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -22,10 +22,7 @@ class FormArticle(forms.Form): #Hereda de la clase forms
     )
     content = forms.CharField(
         label= "Contenido",
-        widget=forms.Textarea,
-        validators=[
-            validators.MaxLengthValidator(20, 'El texto es demasiado largo')
-        ]
+        widget=forms.Textarea
     )
 #Con choices se pueden pasar una serie de opciones
     public_options = [
