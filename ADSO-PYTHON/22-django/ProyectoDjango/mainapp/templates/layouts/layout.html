@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        
+        {% endblock %}
+        | ADSO SENA
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+</head>
+    <body>
+        <!-- Cabecera -->
+        <header>
+            <div id="logotipo">
+                <!--Logo django-->
+                <img src="{% static 'images/logo.png' %}"/>
+                <h1>Proyecto con Django</h1>
+            </div>
+        </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'index' %}">Inicio</a>
+                </li>
+                {% for page in pages  %}
+                <li>
+                    <a href="{% url 'page' page.2 %}">{{page.1}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+            <div id="content">
+                <div class="box">
+                    <h2 class="title"></h2> 
+                    {% block content %}
+                        <strong>Contenido del bloque original!!!</strong>
+                    {% endblock %}            
+                </div>
+            </div>
+        <footer>
+            Programación Curso Django - ADSO 2026 &copy; Aprendiz Luis Felipe Lara - {% now "d/m/Y" %}  
+        </footer>
+    </body>
+</html>
