@@ -1,15 +1,32 @@
 from django import forms
+from django.core import validators
 
 class FormArticle(forms.Form): #Hereda de la clase forms
 
     #creamos las propiedades
     title = forms.CharField(
-        label= "Titulo"
+        label= "Titulo",
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Digite el titulo',
+                'class': 'titulo_form_article'
+            }
+        ),
+        validators=[
+            validators.MinLengthValidator(4, 'El titulo es demasiado corto'),
+            validators.RegexValidator(r'^[\w\s-]+$', 'El titulo esta mal formado', 'invalid_title')#expresion regular
+
+        ]
     )
     content = forms.CharField(
         label= "Contenido",
-        widget=forms.Textarea
-)
+        widget=forms.Textarea,
+        validators=[
+            validators.MaxLengthValidator(20, 'El texto es demasiado largo')
+        ]
+    )
 #Con choices se pueden pasar una serie de opciones
     public_options = [
         (1, 'Si'),

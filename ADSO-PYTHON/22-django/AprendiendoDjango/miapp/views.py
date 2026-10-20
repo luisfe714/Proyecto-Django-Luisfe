@@ -123,7 +123,9 @@ def create_full_article(request):
             #redireccionar la pagina a articulos despues de guardado
             return redirect('articulos')
             #return HttpResponse(title + ' -- ' + content + ' -- ' + str(public))
-    
+        return render(request, 'create_full_article.html', {
+            'form': formulario
+        })
     else:
         #si nos llegan datos por POST debemos generar un formulario vacio
         formulario = FormArticle() #creamos una variable llamada formulario para instanciar el objeto
